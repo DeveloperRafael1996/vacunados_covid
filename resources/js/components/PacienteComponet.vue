@@ -30,12 +30,12 @@
                         <thead>
                             <tr>
                                 <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
+                                <th>Nombre Paciente</th>
+                                <th>Grupo Riesgo</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <!-- <tbody>
                             <tr>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalNuevo">
@@ -111,7 +111,7 @@
                                     <span class="badge badge-success">Activo</span>
                                 </td>
                             </tr>
-                        </tbody>
+                        </tbody> -->
                     </table>
                     <nav>
                         <ul class="pagination">
@@ -200,8 +200,17 @@ export default {
 
         }
     },  
+    methods:{
+        get_pacientes(){
+            axios.get('pacientes')
+                .then((response) => {
+                    console.log(response);
+                });
+        }
+    },
     mounted() {
-            console.log('Component mounted.')
+        console.log('Component mounted.');
+        this.get_pacientes();
     }
 }
 </script>

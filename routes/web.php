@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('contenido/contenido');
 });
+
+Route::get('pacientes', [App\Http\Controllers\PacienteController::class, 'get']);

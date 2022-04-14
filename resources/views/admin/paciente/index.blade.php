@@ -1,4 +1,4 @@
 @extends('principal')
 @section('contenido')
-    <paciente/>
+    <!-- <paciente/> -->
 @endsection
