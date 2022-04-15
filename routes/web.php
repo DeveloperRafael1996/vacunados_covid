@@ -19,4 +19,5 @@ Route::get('/', function () {
 
 Route::get('grupo-riesgo', [App\Http\Controllers\PacienteController::class, 'getGrupoRiego']);
 Route::get('fabricante', [App\Http\Controllers\PacienteController::class, 'getFrabricante']);
+Route::get('edades', [App\Http\Controllers\PacienteController::class, 'getVEdades']);
 

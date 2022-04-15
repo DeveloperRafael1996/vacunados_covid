@@ -8,4 +8,8 @@
         <fabricante></fabricante>
     </template>
 
+    <template v-if="menu==3">
+        <edades></edades>
+    </template>
+
 @endsection

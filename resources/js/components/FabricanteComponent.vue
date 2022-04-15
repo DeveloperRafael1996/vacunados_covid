@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> FABRICANTES VACUNAS
+                    <i class="fa fa-align-justify"></i> FABRICANTES VACUNADOS
                     
                 </div>
                 <div class="card-body">
