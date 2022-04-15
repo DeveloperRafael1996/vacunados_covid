@@ -22,5 +22,4 @@ Route::get('fabricante', [App\Http\Controllers\PacienteController::class, 'getFr
 Route::get('edades', [App\Http\Controllers\PacienteController::class, 'getVEdades']);
 Route::get('grupo-riesgo-dosis', [App\Http\Controllers\PacienteController::class, 'getGrupoRiesgoDosis']);
 Route::get('sector-dosis', [App\Http\Controllers\PacienteController::class, 'getGrupoSectorDosis']);
-
-
+Route::get('fabricante-dosis', [App\Http\Controllers\PacienteController::class, 'getFabricanteDosis']);

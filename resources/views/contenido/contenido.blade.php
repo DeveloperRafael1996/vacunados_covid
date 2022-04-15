@@ -20,9 +20,8 @@
         <sector-dosis></sector-dosis>
     </template>
 
-
-
-
-   
+    <template v-if="menu==6">
+        <fabricante-dosis></fabricante-dosis>
+    </template>
 
 @endsection

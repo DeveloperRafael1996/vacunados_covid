@@ -102,4 +102,30 @@ class PacienteController extends Controller
             ->groupBy('s.descripcion','s.id')->get();        
 
     }
+
+    public function getFabricanteDosis(){
+
+        return PacientDosis::select('pacient_dosic.fabricante')
+                ->selectRaw('
+                    (
+                       
+                        SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            WHERE dosi_id = 1 
+                            AND  fabricante = pacient_dosic.fabricante
+                    ) as DosisUno')
+                ->selectRaw('
+                        (    
+                            SELECT COUNT(dosi_id) FROM pacient_dosic 
+                                WHERE dosi_id = 2
+                                AND  fabricante = pacient_dosic.fabricante
+                        ) as DosisDos')
+                ->selectRaw('
+                        (
+                            SELECT COUNT(dosi_id) FROM pacient_dosic 
+                                WHERE dosi_id = 3
+                                AND  fabricante = pacient_dosic.fabricante
+                        ) as DosisTres')
+
+                ->groupBy('pacient_dosic.fabricante')->get();        
+    }
 }
