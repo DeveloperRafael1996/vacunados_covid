@@ -24,5 +24,10 @@
         <fabricante-dosis></fabricante-dosis>
     </template>
 
+    <template v-if="menu==7">
+        <paciente-report></paciente-report>
+    </template>
+
+
 
 @endsection

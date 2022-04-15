@@ -12,6 +12,13 @@ use Maatwebsite\Excel\Excel;
 
 class PacienteController extends Controller
 {
+
+    public function getPaciente(){
+
+        return 
+            Paciente::all();
+    }
+
     public function getGrupoRiego(){
 
         return 
