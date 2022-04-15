@@ -16,6 +16,11 @@
         <grupo-riesgo-dosis></grupo-riesgo-dosis>
     </template>
 
+    <template v-if="menu==5">
+        <sector-dosis></sector-dosis>
+    </template>
+
+
 
 
    
