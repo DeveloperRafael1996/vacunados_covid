@@ -6,6 +6,9 @@ use App\Models\Paciente;
 use App\Models\PacientDosis;
 use Illuminate\Http\Request;
 use DB;
+use Log;
+use Maatwebsite\Excel\Excel;
+
 
 class PacienteController extends Controller
 {
@@ -128,4 +131,6 @@ class PacienteController extends Controller
 
                 ->groupBy('pacient_dosic.fabricante')->get();        
     }
+
+    
 }
