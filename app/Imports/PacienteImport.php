@@ -3,30 +3,97 @@
 namespace App\Imports;
 
 use App\Models\Paciente;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\{Importable, ToModel, WithHeadingRow};
+use App\Models\PacientDosis;
 
-class PacienteImport implements ToModel
+class PacienteImport implements ToModel,WithHeadingRow
 {
+
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return Paciente|null
+     */
+
+
     public function model(array $row)
     {
-        return new Paciente([
-            'name_paciente' =>$row[0],
-            'nro_documento' =>$row[1],
-            'sector_id' =>$row[2],
-            'grupo_riesgo_id' =>$row[3],
-            'edad_minsa_id' =>$row[4],
-            'fecha_nacimiento' =>$row[5],
-            'genero' =>$row[6],
-            'ubigeo' =>$row[7],
-            'departamento' =>$row[8],
-            'provincia' =>$row[9],
-            'distrito' =>$row[10],
-            'fecha_vacunacion' =>$row[11]
-        ]);
+        if($row["name"]!=null){
+
+            $paciente = Paciente::where('nro_documento', $row["nro_documento"])->first();
+
+            if($paciente) {
+              
+                if($row["primera_dosis"]!=null){
+
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
+                                         ->where('dosi_id',1)->first();
+
+                    if($dosis==null){
+
+                        $pacient = new PacientDosis;
+                        $pacient->paciente_id = $paciente->id;
+                        $pacient->dosi_id = 1;
+                        $pacient->fabricante = $row["fab_primera_dosis"];
+                        $pacient->fecha_vacunacion ="2022-12-21";
+                        $pacient->save();
+                    }
+                }
+
+                if($row["seg_dosis"]!=null){
+
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
+                                        ->where('dosi_id',2)->first();
+
+                    if($dosis==null){
+                        $pacient = new PacientDosis;
+                        $pacient->paciente_id = $paciente->id;
+                        $pacient->dosi_id = 2;
+                        $pacient->fabricante = $row["fab_segunda_dosis"];
+                        $pacient->fecha_vacunacion ="2022-12-21";
+                        $pacient->save();
+                    }
+
+
+                    
+                }
+
+                if($row["tercera_dosis"]!=null){
+
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
+                                         ->where('dosi_id',3)->first();
+
+                    if($dosis==null){
+                        $pacient = new PacientDosis;
+                        $pacient->paciente_id = $paciente->id;
+                        $pacient->dosi_id = 3;
+                        $pacient->fabricante = $row["fab_tercera_dosis"];
+                        $pacient->fecha_vacunacion ="2022-12-21";
+                        $pacient->save();
+                    }
+                }
+
+                return $paciente;
+            }
+            else
+            {
+                $pacient = new Paciente;
+                $pacient->name_paciente =$row["name"];
+                $pacient->nro_documento =$row["nro_documento"];
+                $pacient->sector_id =$row["sector_id"];
+                $pacient->grupo_riesgo_id =$row["grupo_riesgo_id"];
+                $pacient->edad_minsa_id =$row["edad_minsa_id"];
+                $pacient->fecha_nacimiento ="2022-12-21";
+                $pacient->genero =$row["genero"];
+                $pacient->ubigeo =$row["ubigeo"];
+                $pacient->departamento =$row["departamento"];
+                $pacient->provincia =$row["provincia"];
+                $pacient->distrito =$row["distrito"];
+                $pacient->fecha_vacunacion ="2022-12-21";
+
+                $pacient->save();
+                return $pacient;
+            }
+        }
     }
 }

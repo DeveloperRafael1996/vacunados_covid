@@ -9,5 +9,6 @@ class Paciente extends Model
 {
     protected $table = 'pacients';
 
-    use HasFactory;
+    protected $fillable = ['name_paciente', 'nro_documento', 'sector_id', 'grupo_riesgo_id', 'edad_minsa_id', 'fecha_nacimiento', 'genero','ubigeo','departamento','provincia','distrito','fecha_vacunacion'];
+
 }
