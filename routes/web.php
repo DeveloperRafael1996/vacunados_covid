@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('contenido/contenido');
 });
 
-Route::get('pacientes', [App\Http\Controllers\PacienteController::class, 'get']);
+Route::get('grupo-riesgo', [App\Http\Controllers\PacienteController::class, 'getGrupoRiego']);
+Route::get('fabricante', [App\Http\Controllers\PacienteController::class, 'getFrabricante']);
+

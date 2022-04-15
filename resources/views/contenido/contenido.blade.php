@@ -1,11 +1,11 @@
 @extends('principal')
 @section('contenido')
     <template v-if="menu==1">
-        <paciente></paciente>
+        <grupo-riesgo></grupo-riesgo>
     </template>
 
     <template v-if="menu==2">
-        <reporte></reporte>
+        <fabricante></fabricante>
     </template>
 
 @endsection
