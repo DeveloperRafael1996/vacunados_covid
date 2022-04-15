@@ -25,7 +25,7 @@
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> R. Especificos</a>
                 <ul class="nav-dropdown-items">
-                    <li class="nav-item">
+                    <li @click="menu=4" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>VD Grupo Riesgo</a>
                     </li>
                 </ul>

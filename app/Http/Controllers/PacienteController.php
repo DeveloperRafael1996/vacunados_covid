@@ -31,4 +31,39 @@ class PacienteController extends Controller
                     ->groupBy('em.id')
                     ->get();
     }
+
+    public function getGrupoRiesgoDosis(){
+
+        return PacientDosis::join('pacients as p','pacient_dosic.paciente_id','=','p.id')
+                    ->select('gr.id','gr.descripcion')
+                    ->selectRaw('
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 1 
+                                AND p.grupo_riesgo_id = gr.id
+                        ) as DosisUno')
+                    ->selectRaw('
+                            (
+                                SELECT COUNT(pc.dosi_id)  
+                                    FROM pacient_dosic pc
+                                    INNER JOIN pacients p
+                                    ON pc.paciente_id = p.id
+                                    WHERE pc.dosi_id = 2 
+                                    AND p.grupo_riesgo_id = gr.id
+                            ) as DosisDos')
+                    ->selectRaw('
+                            (
+                                SELECT COUNT(pc.dosi_id)  
+                                    FROM pacient_dosic pc
+                                    INNER JOIN pacients p
+                                    ON pc.paciente_id = p.id
+                                    WHERE pc.dosi_id = 3 
+                                    AND p.grupo_riesgo_id = gr.id
+                            ) as DosisTres')
+                    ->join('grupo_riesgos as gr','p.grupo_riesgo_id','=','gr.id')
+                    ->groupBy('gr.descripcion','gr.id')->get();                    
+    }
 }

@@ -25,6 +25,9 @@ Vue.component('grupo-riesgo', require('./components/GrupoRiesgoComponent.vue').d
 Vue.component('fabricante', require('./components/FabricanteComponent.vue').default);
 Vue.component('reporte', require('./components/ReportesEdadesComponet.vue').default);
 Vue.component('edades', require('./components/EdadesComponent.vue').default);
+Vue.component('grupo-riesgo-dosis', require('./components/DosisGRComponent.vue').default);
+
+
 
 
 /**

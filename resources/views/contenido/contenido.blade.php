@@ -12,4 +12,12 @@
         <edades></edades>
     </template>
 
+    <template v-if="menu==4">
+        <grupo-riesgo-dosis></grupo-riesgo-dosis>
+    </template>
+
+
+
+   
+
 @endsection
