@@ -139,5 +139,39 @@ class PacienteController extends Controller
                 ->groupBy('pacient_dosic.fabricante')->get();        
     }
 
+    public function getDistritosDosis(){
+
+        return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
+                    ->select('pac.distrito')
+                    ->selectRaw('
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 1 
+                                AND p.distrito = pac.distrito
+                        ) as DosisUno')
+                    ->selectRaw('
+                            (
+                                SELECT COUNT(pc.dosi_id)  
+                                    FROM pacient_dosic pc
+                                    INNER JOIN pacients p
+                                    ON pc.paciente_id = p.id
+                                    WHERE pc.dosi_id = 2 
+                                    AND p.distrito = pac.distrito
+                            ) as DosisDos')
+                    ->selectRaw('
+                            (
+                                SELECT COUNT(pc.dosi_id)  
+                                    FROM pacient_dosic pc
+                                    INNER JOIN pacients p
+                                    ON pc.paciente_id = p.id
+                                    WHERE pc.dosi_id = 3 
+                                    AND p.distrito = pac.distrito
+                            ) as DosisTres')
+                    ->groupBy('pac.distrito')->get();       
+    }
+
     
 }

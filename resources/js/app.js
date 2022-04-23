@@ -29,7 +29,7 @@ Vue.component('grupo-riesgo-dosis', require('./components/DosisGRComponent.vue')
 Vue.component('sector-dosis', require('./components/SectorDosisComponent.vue').default);
 Vue.component('fabricante-dosis', require('./components/FabricanteDosisComponent.vue').default);
 Vue.component('paciente-report', require('./components/PacienteReporComponet.vue').default);
-
+Vue.component('distrito-report', require('./components/DistritoComponent.vue').default);
 
 
 

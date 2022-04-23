@@ -28,6 +28,8 @@
         <paciente-report></paciente-report>
     </template>
 
-
-
+    <template v-if="menu==8">
+        <distrito-report></distrito-report>
+    </template>
+    
 @endsection

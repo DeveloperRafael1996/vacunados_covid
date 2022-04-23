@@ -26,4 +26,7 @@ Route::get('fabricante-dosis', [App\Http\Controllers\PacienteController::class, 
 Route::post('import-list-excel', [App\Http\Controllers\ImporExcelController::class, 'postImportExcel'])->name('import.excel');
 Route::get('import', [App\Http\Controllers\ImporExcelController::class, 'index'])->name('import');
 Route::get('paciente', [App\Http\Controllers\PacienteController::class, 'getPaciente']);
+Route::get('distrito-dosis', [App\Http\Controllers\PacienteController::class, 'getDistritosDosis']);
+
+
 

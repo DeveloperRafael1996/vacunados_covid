@@ -37,6 +37,11 @@
                     <li @click="menu=7" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>Paciente</a>
                     </li>
+
+                    <li @click="menu=8" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>VD Distrito</a>
+                    </li>
+
                 </ul>
             </li>
 
