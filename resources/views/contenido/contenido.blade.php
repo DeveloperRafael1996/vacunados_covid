@@ -31,5 +31,9 @@
     <template v-if="menu==8">
         <distrito-report></distrito-report>
     </template>
+
+    <template v-if="menu==9">
+        <provincia-report></provincia-report>
+    </template>
     
 @endsection
