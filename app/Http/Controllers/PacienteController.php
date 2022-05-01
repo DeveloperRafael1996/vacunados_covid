@@ -288,7 +288,7 @@ class PacienteController extends Controller
     public function getDistritosDosis(){
 
         return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
-                    ->select('pac.distrito')
+                    ->select('pac.provincia','pac.distrito')
                     ->selectRaw('
                         (
                             SELECT COUNT(pc.dosi_id)  
@@ -346,7 +346,7 @@ class PacienteController extends Controller
                                     AND p.distrito = pac.distrito
                                 )
                             ) as Total')
-                    ->groupBy('pac.distrito')->get();       
+                    ->groupBy('pac.distrito', 'pac.provincia')->get();       
     }
 
     
