@@ -115,28 +115,49 @@ class PacienteController extends Controller
 
     public function getFabricanteDosis(){
 
-        return PacientDosis::select('pacient_dosic.fabricante')
+        return PacientDosis::select('pacient_dosic.fabricante as fab')
                 ->selectRaw('
                     (
-                       
                         SELECT COUNT(dosi_id) FROM pacient_dosic 
                             WHERE dosi_id = 1 
-                            AND  fabricante = pacient_dosic.fabricante
+                            AND  fabricante = fab
                     ) as DosisUno')
+
                 ->selectRaw('
-                        (    
+                    (
+                        SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            WHERE dosi_id = 2 
+                            AND  fabricante = fab
+                    ) as DosisDos')
+                ->selectRaw('
+                    (
+                        SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            WHERE dosi_id = 3 
+                            AND  fabricante = fab
+                    ) as DosisTres')
+                ->selectRaw('
+                    (
+                        (  
+                            SELECT COUNT(dosi_id) FROM pacient_dosic 
+                                WHERE dosi_id = 1 
+                                AND  fabricante = fab
+                        ) 
+                        +
+                        (
                             SELECT COUNT(dosi_id) FROM pacient_dosic 
                                 WHERE dosi_id = 2
-                                AND  fabricante = pacient_dosic.fabricante
-                        ) as DosisDos')
-                ->selectRaw('
+                                AND  fabricante = fab
+                        )
+                        +
                         (
                             SELECT COUNT(dosi_id) FROM pacient_dosic 
                                 WHERE dosi_id = 3
-                                AND  fabricante = pacient_dosic.fabricante
-                        ) as DosisTres')
+                                AND  fabricante = fab
+                        )
 
-                ->groupBy('pacient_dosic.fabricante')->get();        
+                    ) as Total')
+            
+                ->groupBy('fab')->get();        
     }
 
     public function getDistritosDosis(){

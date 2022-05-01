@@ -25,14 +25,16 @@
                                 <th>1RDA DOSIS</th>
                                 <th>2DA DOSIS</th>
                                 <th>3RA DOSIS</th>
+                                <th>TOTAL</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item ,index) in fabricante" :key="index">
-                                <td v-text="item.fabricante"></td>
+                                <td v-text="item.fab"></td>
                                 <td v-text="item.DosisUno"></td>
                                 <td v-text="item.DosisDos"></td>
                                 <td v-text="item.DosisTres"></td>
+                                <td v-text="item.Total"></td>
                             </tr>                                
                         </tbody>
                     </table>
