@@ -25,6 +25,7 @@
                                 <th>1RDA DOSIS</th>
                                 <th>2DA DOSIS</th>
                                 <th>3RA DOSIS</th>
+                                <th>TOTAL</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +34,7 @@
                                 <td v-text="item.DosisUno"></td>
                                 <td v-text="item.DosisDos"></td>
                                 <td v-text="item.DosisTres"></td>
+                                <td v-text="item.Total"></td>
                             </tr>                                
                         </tbody>
                       

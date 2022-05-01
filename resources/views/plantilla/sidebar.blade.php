@@ -34,12 +34,17 @@
                     <li @click="menu=6" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>VD Fabricante</a>
                     </li>
-                    <li @click="menu=7" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-bag"></i>Paciente</a>
-                    </li>
 
+                    <li @click="menu=9" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>VD Provincia</a>
+                    </li>
+                    
                     <li @click="menu=8" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>VD Distrito</a>
+                    </li>
+
+                    <li @click="menu=7" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>V. Paciente</a>
                     </li>
 
                 </ul>

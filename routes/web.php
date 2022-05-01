@@ -27,6 +27,9 @@ Route::post('import-list-excel', [App\Http\Controllers\ImporExcelController::cla
 Route::get('import', [App\Http\Controllers\ImporExcelController::class, 'index'])->name('import');
 Route::get('paciente', [App\Http\Controllers\PacienteController::class, 'getPaciente']);
 Route::get('distrito-dosis', [App\Http\Controllers\PacienteController::class, 'getDistritosDosis']);
+Route::get('provincia-dosis', [App\Http\Controllers\PacienteController::class, 'getProvinciaDosis']);
+
 
 Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
