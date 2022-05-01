@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/main', function () {
     return view('contenido/contenido');
-});
+})->name('main');
 
 Route::get('grupo-riesgo', [App\Http\Controllers\PacienteController::class, 'getGrupoRiego']);
 Route::get('fabricante', [App\Http\Controllers\PacienteController::class, 'getFrabricante']);
@@ -28,8 +28,5 @@ Route::get('import', [App\Http\Controllers\ImporExcelController::class, 'index']
 Route::get('paciente', [App\Http\Controllers\PacienteController::class, 'getPaciente']);
 Route::get('distrito-dosis', [App\Http\Controllers\PacienteController::class, 'getDistritosDosis']);
 
-
-
-
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
