@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <button type="submit" @click="get_distrito()" class="btn btn-primary"><i class="fa fa-search"></i> VER</button>
+                                <button type="submit" @click="get_provincia()" class="btn btn-primary"><i class="fa fa-search"></i> VER</button>
                             </div>
                         </div>
                     </div>
@@ -52,14 +52,21 @@
 export default {
     data() {
         return {
-            provincia:[]
+            provincia:[],
+            distrito: []
         }
     },  
     methods:{
-        get_distrito(){
+        get_provincia(){
             axios.get('provincia-dosis')
                 .then((response) => {
                      this.provincia = response.data;
+                });
+        }, 
+        get_distrito(){
+            axios.get('distrito-dosis')
+                .then((response) => {
+                     this.distrito = response.data;
                 });
         }
     },

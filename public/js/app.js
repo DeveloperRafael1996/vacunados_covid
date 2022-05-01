@@ -6101,15 +6101,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      provincia: []
+      provincia: [],
+      distrito: []
     };
   },
   methods: {
-    get_distrito: function get_distrito() {
+    get_provincia: function get_provincia() {
       var _this = this;
 
       axios.get('provincia-dosis').then(function (response) {
         _this.provincia = response.data;
+      });
+    },
+    get_distrito: function get_distrito() {
+      var _this2 = this;
+
+      axios.get('distrito-dosis').then(function (response) {
+        _this2.distrito = response.data;
       });
     }
   },
@@ -30978,7 +30986,7 @@ var render = function () {
                     attrs: { type: "submit" },
                     on: {
                       click: function ($event) {
-                        return _vm.get_distrito()
+                        return _vm.get_provincia()
                       },
                     },
                   },
