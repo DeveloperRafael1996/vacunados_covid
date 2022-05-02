@@ -43,6 +43,11 @@
                         <a class="nav-link" href="#"><i class="icon-bag"></i>VD Distrito</a>
                     </li>
 
+                     
+                    <li @click="menu=10" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>VD Rezagados</a>
+                    </li>
+
                     <li @click="menu=7" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>V. Paciente</a>
                     </li>
@@ -53,7 +58,7 @@
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-bag"></i> Importar </a>
                 <ul class="nav-dropdown-items">
-                    <li   href="{{ route('import')}}"   class="nav-item">
+                    <li @click="menu=11" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-bag"></i>Subir Excel</a>
                     </li>
                 </ul>

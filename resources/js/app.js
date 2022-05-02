@@ -31,8 +31,7 @@ Vue.component('fabricante-dosis', require('./components/FabricanteDosisComponent
 Vue.component('paciente-report', require('./components/PacienteReporComponet.vue').default);
 Vue.component('distrito-report', require('./components/DistritoComponent.vue').default);
 Vue.component('provincia-report', require('./components/ProvinciaComponent.vue').default);
-
-
+Vue.component('rezagados-report', require('./components/RezagadosComponent.vue').default);
 
 
 /**

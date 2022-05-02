@@ -29,8 +29,9 @@ public function __construct(Excel $excel)
         
         session()->flash('message', 'Importacion de paciente completada');
         
-        return redirect("import");
+        //return redirect()->route('main');
 
+        return 'Registro Exitoso...';
    
     }
 }

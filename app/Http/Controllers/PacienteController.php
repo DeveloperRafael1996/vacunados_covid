@@ -221,8 +221,7 @@ class PacienteController extends Controller
                 ->groupBy('fab')->get();        
     }
 
-    public function getProvinciaDosis()
-    {
+    public function getProvinciaDosis(){
         return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
                 ->select('pac.provincia')
                 ->selectRaw('
@@ -347,6 +346,75 @@ class PacienteController extends Controller
                                 )
                             ) as Total')
                     ->groupBy('pac.distrito', 'pac.provincia')->get();       
+    }
+
+    public function getRezagados(){
+        return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
+        ->select('pac.provincia')
+        ->selectRaw('
+            (
+                SELECT COUNT(pc.dosi_id)  
+                    FROM pacient_dosic pc
+                    INNER JOIN pacients p
+                    ON pc.paciente_id = p.id
+                    WHERE pc.dosi_id = 3 
+                    AND p.provincia = pac.provincia
+                    AND pc.fabricante = "SINOPHARM"
+            ) as SINOPHARM')
+        ->selectRaw('
+                (
+                    SELECT COUNT(pc.dosi_id)  
+                        FROM pacient_dosic pc
+                        INNER JOIN pacients p
+                        ON pc.paciente_id = p.id
+                        WHERE pc.dosi_id = 3
+                        AND p.provincia = pac.provincia
+                        AND pc.fabricante = "PFIZER"
+                ) as PFIZER')
+        ->selectRaw('
+                (
+                    SELECT COUNT(pc.dosi_id)  
+                        FROM pacient_dosic pc
+                        INNER JOIN pacients p
+                        ON pc.paciente_id = p.id
+                        WHERE pc.dosi_id = 3 
+                        AND p.provincia = pac.provincia
+                        AND pc.fabricante = "ASTRAZENECA"
+                ) as ASTRAZENECA')
+
+        ->selectRaw('
+            (
+                (
+                    SELECT COUNT(pc.dosi_id)  
+                    FROM pacient_dosic pc
+                    INNER JOIN pacients p
+                    ON pc.paciente_id = p.id
+                    WHERE pc.dosi_id = 3 
+                    AND p.provincia = pac.provincia
+                    AND pc.fabricante = "SINOPHARM"
+                )
+                +
+                (
+                    SELECT COUNT(pc.dosi_id)  
+                        FROM pacient_dosic pc
+                        INNER JOIN pacients p
+                        ON pc.paciente_id = p.id
+                        WHERE pc.dosi_id = 3
+                        AND p.provincia = pac.provincia
+                        AND pc.fabricante = "PFIZER"
+                )
+                +
+                (
+                    SELECT COUNT(pc.dosi_id)  
+                    FROM pacient_dosic pc
+                    INNER JOIN pacients p
+                    ON pc.paciente_id = p.id
+                    WHERE pc.dosi_id = 3 
+                    AND p.provincia = pac.provincia
+                    AND pc.fabricante = "ASTRAZENECA"
+                )
+            ) as Total')
+        ->groupBy('pac.provincia')->get();       
     }
 
     
