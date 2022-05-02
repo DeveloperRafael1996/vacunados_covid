@@ -222,12 +222,13 @@ class PacienteController extends Controller
                 ->groupBy('fab')->get();        
     }
 
-    public function getProvinciaDosis(Request $request){
+    public function getProvinciaDosis(Request $request)
+    {
 
         if($request->f_inicio && $request->f_fin) {
 
             return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
-                ->select('pac.provincia')
+                ->select('pac.departamento','pac.provincia')
                 ->selectRaw('
                     (
                         SELECT COUNT(pc.dosi_id)  
@@ -288,11 +289,12 @@ class PacienteController extends Controller
                 ->groupBy('pac.provincia')
                 ->where('pacient_dosic.fecha_vacunacion', '>=', $request->f_inicio)
                 ->where('pacient_dosic.fecha_vacunacion', '<=', $request->f_fin)
+                ->where('pac.departamento','=', 'LORETO')
                 ->get(); 
         }   
 
         return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
-                ->select('pac.provincia')
+                ->select('pac.departamento','pac.provincia')
                 ->selectRaw('
                     (
                         SELECT COUNT(pc.dosi_id)  
@@ -350,13 +352,14 @@ class PacienteController extends Controller
                             AND p.provincia = pac.provincia
                         )
                     ) as Total')
-                ->groupBy('pac.provincia')->get();       
+                ->where('pac.departamento','=', 'LORETO')
+                ->groupBy('pac.departamento','pac.provincia')->get();       
     }
 
     public function getDistritosDosis(){
 
         return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
-                    ->select('pac.provincia','pac.distrito')
+                    ->select('pac.departamento','pac.provincia','pac.distrito')
                     ->selectRaw('
                         (
                             SELECT COUNT(pc.dosi_id)  
@@ -414,7 +417,8 @@ class PacienteController extends Controller
                                     AND p.distrito = pac.distrito
                                 )
                             ) as Total')
-                    ->groupBy('pac.distrito', 'pac.provincia')->get();       
+                    ->where('pac.departamento','=', 'LORETO')
+                    ->groupBy('pac.departamento','pac.distrito', 'pac.provincia')->get();       
     }
 
     public function getRezagados(){
