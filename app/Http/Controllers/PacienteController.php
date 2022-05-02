@@ -9,6 +9,7 @@ use DB;
 use Log;
 use Maatwebsite\Excel\Excel;
 
+
 class PacienteController extends Controller
 {
 
@@ -221,7 +222,75 @@ class PacienteController extends Controller
                 ->groupBy('fab')->get();        
     }
 
-    public function getProvinciaDosis(){
+    public function getProvinciaDosis(Request $request){
+
+        if($request->f_inicio && $request->f_fin) {
+
+            return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
+                ->select('pac.provincia')
+                ->selectRaw('
+                    (
+                        SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 1 
+                            AND p.provincia = pac.provincia
+                    ) as DosisUno')
+                ->selectRaw('
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 2 
+                                AND p.provincia = pac.provincia
+                        ) as DosisDos')
+                ->selectRaw('
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 3 
+                                AND p.provincia = pac.provincia
+                        ) as DosisTres')
+
+                ->selectRaw('
+                    (
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 1 
+                            AND p.provincia = pac.provincia
+                        )
+                        +
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 2 
+                            AND p.provincia = pac.provincia
+                        )
+                        +
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 3 
+                            AND p.provincia = pac.provincia
+                        )
+                    ) as Total')
+                ->groupBy('pac.provincia')
+                ->where('pacient_dosic.fecha_vacunacion', '>=', $request->f_inicio)
+                ->where('pacient_dosic.fecha_vacunacion', '<=', $request->f_fin)
+                ->get(); 
+        }   
+
         return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
                 ->select('pac.provincia')
                 ->selectRaw('

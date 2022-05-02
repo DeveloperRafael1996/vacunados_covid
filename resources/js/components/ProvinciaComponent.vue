@@ -13,9 +13,23 @@
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-6">
+                            
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="date"  v-model="f_inicio" class="form-control" placeholder="Fecha Inicio">
+                                        <input type="date"  v-model="f_fin" class="form-control" placeholder="Fecha Fin">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <br>
+
                             <div class="input-group">
                                 <button type="submit" @click="get_provincia()" class="btn btn-primary"><i class="fa fa-search"></i> VER</button>
                             </div>
+
                         </div>
                     </div>
                     <table class="table table-bordered table-striped table-sm">
@@ -53,15 +67,24 @@ export default {
     data() {
         return {
             provincia:[],
-            distrito: []
+            distrito: [],
+            f_inicio: '',
+            f_fin: ''
         }
     },  
     methods:{
         get_provincia(){
-            axios.get('provincia-dosis')
-                .then((response) => {
-                     this.provincia = response.data;
-                });
+
+            //console.log(this.f_inicio)
+            //console.log(this.f_fin)
+
+            axios.post('provincia-dosis', {
+                'f_inicio':this.f_inicio,
+                'f_fin':this.f_fin
+            })
+            .then((response) => {
+                this.provincia = response.data;
+            });
         }, 
         get_distrito(){
             axios.get('distrito-dosis')

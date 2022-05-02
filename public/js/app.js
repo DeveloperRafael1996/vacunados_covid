@@ -6134,18 +6134,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       provincia: [],
-      distrito: []
+      distrito: [],
+      f_inicio: '',
+      f_fin: ''
     };
   },
   methods: {
     get_provincia: function get_provincia() {
       var _this = this;
 
-      axios.get('provincia-dosis').then(function (response) {
+      //console.log(this.f_inicio)
+      //console.log(this.f_fin)
+      axios.post('provincia-dosis', {
+        'f_inicio': this.f_inicio,
+        'f_fin': this.f_fin
+      }).then(function (response) {
         _this.provincia = response.data;
       });
     },
@@ -31308,6 +31329,58 @@ var render = function () {
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "form-group row" }, [
             _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.f_inicio,
+                          expression: "f_inicio",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "Fecha Inicio" },
+                      domProps: { value: _vm.f_inicio },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.f_inicio = $event.target.value
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.f_fin,
+                          expression: "f_fin",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "Fecha Fin" },
+                      domProps: { value: _vm.f_fin },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.f_fin = $event.target.value
+                        },
+                      },
+                    }),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
               _c("div", { staticClass: "input-group" }, [
                 _c(
                   "button",
