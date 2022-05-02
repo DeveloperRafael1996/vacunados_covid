@@ -32,6 +32,8 @@ Vue.component('paciente-report', require('./components/PacienteReporComponet.vue
 Vue.component('distrito-report', require('./components/DistritoComponent.vue').default);
 Vue.component('provincia-report', require('./components/ProvinciaComponent.vue').default);
 Vue.component('rezagados-report', require('./components/RezagadosComponent.vue').default);
+Vue.component('dashboard-report', require('./components/DashboardComponent.vue').default);
+
 
 
 /**
