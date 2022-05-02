@@ -11,7 +11,7 @@ class ImporExcelController extends Controller
 {
     private $excel;
 
-public function __construct(Excel $excel)
+    public function __construct(Excel $excel)
     {
         $this->excel = $excel;
     }
