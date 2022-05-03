@@ -33,8 +33,7 @@ Vue.component('distrito-report', require('./components/DistritoComponent.vue').d
 Vue.component('provincia-report', require('./components/ProvinciaComponent.vue').default);
 Vue.component('rezagados-report', require('./components/RezagadosComponent.vue').default);
 Vue.component('dashboard-report', require('./components/DashboardComponent.vue').default);
-
-
+Vue.component('rezagados-edades', require('./components/EdadRezagadosComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

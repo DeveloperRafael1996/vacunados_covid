@@ -45,7 +45,11 @@
 
                      
                     <li @click="menu=10" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-bag"></i>VD Rezagados</a>
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>VDP Rezagados</a>
+                    </li>
+
+                    <li @click="menu=12" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-bag"></i>VDE Rezagados</a>
                     </li>
 
                     <li @click="menu=7" class="nav-item">

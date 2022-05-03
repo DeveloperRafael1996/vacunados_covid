@@ -85,5 +85,9 @@
             </main>
 
     </template>
-    
+
+    <template v-if="menu==12">
+        <rezagados-edades></rezagados-edades>
+    </template>
+
 @endsection

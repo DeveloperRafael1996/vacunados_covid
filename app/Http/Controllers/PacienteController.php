@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Paciente;
 use App\Models\PacientDosis;
 use Illuminate\Http\Request;
 use DB;
 use Log;
 use Maatwebsite\Excel\Excel;
-
 
 class PacienteController extends Controller
 {
@@ -317,6 +315,55 @@ class PacienteController extends Controller
                     ) as CANTIDAD')
                 ->where('pac.departamento','=', 'LORETO')
                 ->groupBy('pac.departamento','pac.provincia')->get();       
+    }
+
+    public function getEdadesRezagados()
+    {
+        return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
+                ->join('edad_minsas as em', 'em.id', '=', 'pac.edad_minsa_id')
+                ->select('pac.departamento','em.descripcion')
+                ->selectRaw('
+                    (
+                       (
+                        SELECT COUNT(pd.dosi_id)  
+                        FROM pacient_dosic pd
+                            INNER JOIN pacients p
+                            ON pd.paciente_id = p.id
+                            INNER JOIN edad_minsas emdosis
+                            ON emdosis.id = p.edad_minsa_id
+                            WHERE pd.dosi_id = 1 
+                            AND emdosis.descripcion = em.descripcion 
+                            AND p.departamento = "LORETO"
+                       )
+                       +
+                       (
+                            SELECT COUNT(pd.dosi_id)  
+                                FROM pacient_dosic pd
+                                    INNER JOIN pacients p
+                                    ON pd.paciente_id = p.id
+                                    INNER JOIN edad_minsas emdosis
+                                    ON emdosis.id = p.edad_minsa_id
+                                    WHERE pd.dosi_id = 2 
+                                    AND emdosis.descripcion = em.descripcion 
+                                    AND p.departamento = "LORETO"
+                       )
+                       -
+                       (
+                            SELECT COUNT(pd.dosi_id)  
+                                FROM pacient_dosic pd
+                                    INNER JOIN pacients p
+                                    ON pd.paciente_id = p.id
+                                    INNER JOIN edad_minsas emdosis
+                                    ON emdosis.id = p.edad_minsa_id
+                                    WHERE pd.dosi_id = 3 
+                                    AND emdosis.descripcion = em.descripcion 
+                                    AND p.departamento = "LORETO"
+                       )
+
+                    ) as Cantidad')
+                
+                ->where('pac.departamento','=', 'LORETO')
+                ->groupBy('pac.departamento','em.descripcion')->get();       
     }
 
 }

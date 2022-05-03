@@ -29,6 +29,7 @@ Route::get('paciente', [App\Http\Controllers\PacienteController::class, 'getPaci
 Route::get('distrito-dosis', [App\Http\Controllers\PacienteController::class, 'getDistritosDosis']);
 Route::post('provincia-dosis', [App\Http\Controllers\PacienteController::class, 'getProvinciaDosis']);
 Route::get('rezagados-dosis', [App\Http\Controllers\PacienteController::class, 'getRezagados']);
+Route::get('rezagados-dosis-edades', [App\Http\Controllers\PacienteController::class, 'getEdadesRezagados']);
 
 
 Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
