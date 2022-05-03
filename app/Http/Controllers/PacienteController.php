@@ -280,73 +280,43 @@ class PacienteController extends Controller
     }
 
     public function getRezagados(){
-        return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
-        ->select('pac.provincia')
-        ->selectRaw('
-            (
-                SELECT COUNT(pc.dosi_id)  
-                    FROM pacient_dosic pc
-                    INNER JOIN pacients p
-                    ON pc.paciente_id = p.id
-                    WHERE pc.dosi_id = 3 
-                    AND p.provincia = pac.provincia
-                    AND pc.fabricante = "SINOPHARM"
-            ) as SINOPHARM')
-        ->selectRaw('
-                (
-                    SELECT COUNT(pc.dosi_id)  
-                        FROM pacient_dosic pc
-                        INNER JOIN pacients p
-                        ON pc.paciente_id = p.id
-                        WHERE pc.dosi_id = 3
-                        AND p.provincia = pac.provincia
-                        AND pc.fabricante = "PFIZER"
-                ) as PFIZER')
-        ->selectRaw('
-                (
-                    SELECT COUNT(pc.dosi_id)  
-                        FROM pacient_dosic pc
-                        INNER JOIN pacients p
-                        ON pc.paciente_id = p.id
-                        WHERE pc.dosi_id = 3 
-                        AND p.provincia = pac.provincia
-                        AND pc.fabricante = "ASTRAZENECA"
-                ) as ASTRAZENECA')
 
-        ->selectRaw('
-            (
-                (
-                    SELECT COUNT(pc.dosi_id)  
-                    FROM pacient_dosic pc
-                    INNER JOIN pacients p
-                    ON pc.paciente_id = p.id
-                    WHERE pc.dosi_id = 3 
-                    AND p.provincia = pac.provincia
-                    AND pc.fabricante = "SINOPHARM"
-                )
-                +
-                (
-                    SELECT COUNT(pc.dosi_id)  
-                        FROM pacient_dosic pc
-                        INNER JOIN pacients p
-                        ON pc.paciente_id = p.id
-                        WHERE pc.dosi_id = 3
-                        AND p.provincia = pac.provincia
-                        AND pc.fabricante = "PFIZER"
-                )
-                +
-                (
-                    SELECT COUNT(pc.dosi_id)  
-                    FROM pacient_dosic pc
-                    INNER JOIN pacients p
-                    ON pc.paciente_id = p.id
-                    WHERE pc.dosi_id = 3 
-                    AND p.provincia = pac.provincia
-                    AND pc.fabricante = "ASTRAZENECA"
-                )
-            ) as Total')
-        ->groupBy('pac.provincia')->get();       
+        return PacientDosis::join('pacients as pac','pacient_dosic.paciente_id','=','pac.id')
+                ->select('pac.departamento','pac.provincia')
+                ->selectRaw('
+                    (
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 1 
+                            AND p.provincia = pac.provincia
+                            AND p.departamento = "LORETO"
+                        )
+                        +
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 2 
+                            AND p.provincia = pac.provincia
+                            AND p.departamento = "LORETO"
+                        )
+                        -
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                            FROM pacient_dosic pc
+                            INNER JOIN pacients p
+                            ON pc.paciente_id = p.id
+                            WHERE pc.dosi_id = 3 
+                            AND p.provincia = pac.provincia
+                            AND p.departamento = "LORETO"
+                        )
+                    ) as CANTIDAD')
+                ->where('pac.departamento','=', 'LORETO')
+                ->groupBy('pac.departamento','pac.provincia')->get();       
     }
 
-    
 }

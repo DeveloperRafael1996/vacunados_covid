@@ -6567,11 +6567,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -32329,18 +32324,8 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("td", {
-                      domProps: { textContent: _vm._s(item.SINOPHARM) },
+                      domProps: { textContent: _vm._s(item.CANTIDAD) },
                     }),
-                    _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.PFIZER) },
-                    }),
-                    _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.ASTRAZENECA) },
-                    }),
-                    _vm._v(" "),
-                    _c("td", { domProps: { textContent: _vm._s(item.Total) } }),
                   ])
                 }),
                 0
@@ -32375,7 +32360,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("i", { staticClass: "fa fa-align-justify" }),
-      _vm._v(" FABRICANTE REZAGADOS\n            "),
+      _vm._v(" PROVINCIA REZAGADOS\n            "),
     ])
   },
   function () {
@@ -32386,13 +32371,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("PROVINCIA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("SINOPHARM")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("PFIZER")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ASTRAZENECA")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("TOTAL")]),
+        _c("th", [_vm._v("CANTIDAD")]),
       ]),
     ])
   },
