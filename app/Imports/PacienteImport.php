@@ -27,52 +27,48 @@ class PacienteImport implements ToModel,WithHeadingRow
             $paciente = Paciente::where('nro_documento', $row["nro_documento"])->first();
 
             if($paciente) {
-              
-                if($row["primera_dosis"]!=null){
 
-                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
-                                         ->where('dosi_id',1)->first();
+                if($row["dosis"] == '1ª dosis')
+                {
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)->where('dosi_id',1)->first();
 
-                    if($dosis==null){
-
+                    if($dosis==null)
+                    {
                         $pacient = new PacientDosis;
                         $pacient->paciente_id = $paciente->id;
                         $pacient->dosi_id = 1;
-                        $pacient->fabricante = $row["fab_primera_dosis"];
-                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_primera_dosis'])->format('Y-m-d');
+                        $pacient->fabricante = $row["fabricante"];
+                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha'])->format('Y-m-d');
                         $pacient->save();
                     }
+
                 }
+                if($row["dosis"] == '2ª dosis')
+                {
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)->where('dosi_id',2)->first();
 
-                if($row["seg_dosis"]!=null){
-
-                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
-                                        ->where('dosi_id',2)->first();
-
-                    if($dosis==null){
+                    if($dosis==null)
+                    {
                         $pacient = new PacientDosis;
                         $pacient->paciente_id = $paciente->id;
                         $pacient->dosi_id = 2;
-                        $pacient->fabricante = $row["fab_segunda_dosis"];
-                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_segunda_dosis'])->format('Y-m-d');
+                        $pacient->fabricante = $row["fabricante"];
+                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha'])->format('Y-m-d');
                         $pacient->save();
                     }
-
-
-                    
                 }
 
-                if($row["tercera_dosis"]!=null){
+                if($row["dosis"] == '3ª dosis')
+                {
+                    $dosis = PacientDosis::where('paciente_id',$paciente->id)->where('dosi_id',3)->first();
 
-                    $dosis = PacientDosis::where('paciente_id',$paciente->id)
-                                         ->where('dosi_id',3)->first();
-
-                    if($dosis==null){
+                    if($dosis==null)
+                    {
                         $pacient = new PacientDosis;
                         $pacient->paciente_id = $paciente->id;
                         $pacient->dosi_id = 3;
-                        $pacient->fabricante = $row["fab_tercera_dosis"];
-                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha_tercera_dosis'])->format('Y-m-d');
+                        $pacient->fabricante = $row["fabricante"];
+                        $pacient->fecha_vacunacion =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['fecha'])->format('Y-m-d');
                         $pacient->save();
                     }
                 }

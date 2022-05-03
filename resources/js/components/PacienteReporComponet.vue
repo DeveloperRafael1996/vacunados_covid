@@ -21,18 +21,22 @@
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>NOMBRE</th>
                                 <th>DOCUMENTO</th>
                                 <th>SEXO</th>
+                                <th>DEPARTAMENTO</th>
                                 <th>PROVINCIA</th>
                                 <th>DISTRITO</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item ,index) in paciente" :key="index">
+                                <td v-text="index + 1"></td>
                                 <td v-text="item.name_paciente"></td>
                                 <td v-text="item.nro_documento"></td>
                                 <td v-text="item.genero"></td>
+                                <td v-text="item.departamento"></td>
                                 <td v-text="item.provincia"></td>
                                 <td v-text="item.distrito"></td>
                             </tr>                                

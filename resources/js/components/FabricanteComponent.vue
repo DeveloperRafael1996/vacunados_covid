@@ -30,7 +30,11 @@
                             <tr v-for="(item ,index) in fabricante" :key="index">
                                 <td v-text="item.fabricante"></td>
                                 <td v-text="item.cantidad"></td>
-                            </tr>                                
+                            </tr>   
+                            <tr>
+                                <td>TOTAL</td>
+                                <td>{{total}}</td>
+                            </tr>                             
                         </tbody>
                       
                     </table>
@@ -47,7 +51,8 @@
 export default {
     data() {
         return {
-            fabricante:[]
+            fabricante:[],
+            total:0,
         }
     },  
     methods:{
@@ -55,6 +60,10 @@ export default {
             axios.get('fabricante')
                 .then((response) => {
                      this.fabricante = response.data;
+
+                        this.total = this.fabricante.reduce((acc, r) => {
+                            return acc + parseFloat(r.cantidad);
+                        }, 0);
                 });
         }
     },

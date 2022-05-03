@@ -13,10 +13,8 @@ use Maatwebsite\Excel\Excel;
 class PacienteController extends Controller
 {
 
-    public function getPaciente(){
-
-        return 
-            Paciente::all();
+    public function getPaciente() {
+        return Paciente::where('departamento','=', 'LORETO')->get();
     }
 
     public function getGrupoRiego(){
@@ -24,20 +22,25 @@ class PacienteController extends Controller
         return 
             Paciente::join('grupo_riesgos as gr','pacients.grupo_riesgo_id', '=', 'gr.id')
                     ->select('gr.descripcion as descripcion',DB::raw("COUNT(pacients.id) as cantidad"))
+                    ->where('pacients.departamento','=', 'LORETO')
                     ->groupBy('gr.id')
                     ->get();
     }
 
     public function getFrabricante(){
 
-        return PacientDosis::select('pacient_dosic.fabricante', DB::raw("COUNT(pacient_dosic.paciente_id) as cantidad")) 
-                ->groupBy('pacient_dosic.fabricante')->get();         
+        return PacientDosis::select('p.departamento','pacient_dosic.fabricante', DB::raw("COUNT(pacient_dosic.paciente_id) as cantidad"))
+                ->join('pacients as p','p.id','=','pacient_dosic.paciente_id') 
+                ->where('p.departamento','=', 'LORETO')
+                ->groupBy('pacient_dosic.fabricante','p.departamento')->get();
+
     }
 
     public function getVEdades(){
         return 
             Paciente::join('edad_minsas as em','pacients.edad_minsa_id', '=', 'em.id')
                     ->select('em.descripcion as descripcion',DB::raw("COUNT(pacients.id) as cantidad"))
+                    ->where('pacients.departamento','=', 'LORETO')
                     ->groupBy('em.id')
                     ->get();
     }
@@ -54,57 +57,30 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 1 
                                 AND p.grupo_riesgo_id = gr.id
+                                AND p.departamento = "LORETO"
                         ) as DosisUno')
                     ->selectRaw('
-                            (
-                                SELECT COUNT(pc.dosi_id)  
-                                    FROM pacient_dosic pc
-                                    INNER JOIN pacients p
-                                    ON pc.paciente_id = p.id
-                                    WHERE pc.dosi_id = 2 
-                                    AND p.grupo_riesgo_id = gr.id
-                            ) as DosisDos')
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 2 
+                                AND p.grupo_riesgo_id = gr.id
+                                AND p.departamento = "LORETO"
+                        ) as DosisDos')
                     ->selectRaw('
-                            (
-                                SELECT COUNT(pc.dosi_id)  
-                                    FROM pacient_dosic pc
-                                    INNER JOIN pacients p
-                                    ON pc.paciente_id = p.id
-                                    WHERE pc.dosi_id = 3 
-                                    AND p.grupo_riesgo_id = gr.id
-                            ) as DosisTres')
-
-
-                    ->selectRaw('
-                            (
-                                (
-                                    SELECT COUNT(pc.dosi_id)  
-                                    FROM pacient_dosic pc
-                                    INNER JOIN pacients p
-                                    ON pc.paciente_id = p.id
-                                    WHERE pc.dosi_id = 1 
-                                    AND p.grupo_riesgo_id = gr.id
-                                )
-                                +
-                                (
-                                    SELECT COUNT(pc.dosi_id)  
-                                    FROM pacient_dosic pc
-                                    INNER JOIN pacients p
-                                    ON pc.paciente_id = p.id
-                                    WHERE pc.dosi_id = 2 
-                                    AND p.grupo_riesgo_id = gr.id
-                                )
-                                +
-                                (
-                                    SELECT COUNT(pc.dosi_id)  
-                                    FROM pacient_dosic pc
-                                    INNER JOIN pacients p
-                                    ON pc.paciente_id = p.id
-                                    WHERE pc.dosi_id = 3 
-                                    AND p.grupo_riesgo_id = gr.id
-                                )
-                            ) as Total')
+                        (
+                            SELECT COUNT(pc.dosi_id)  
+                                FROM pacient_dosic pc
+                                INNER JOIN pacients p
+                                ON pc.paciente_id = p.id
+                                WHERE pc.dosi_id = 3 
+                                AND p.grupo_riesgo_id = gr.id
+                                AND p.departamento = "LORETO"
+                        ) as DosisTres')
                     ->join('grupo_riesgos as gr','p.grupo_riesgo_id','=','gr.id')
+                    ->where('p.departamento','=', 'LORETO')
                     ->groupBy('gr.descripcion','gr.id')->get();                    
     }
 
@@ -120,6 +96,7 @@ class PacienteController extends Controller
                         ON pc.paciente_id = p.id
                         WHERE pc.dosi_id = 1 
                         AND p.sector_id = s.id
+                        AND p.departamento = "LORETO"
                 ) as DosisUno')
             ->selectRaw('
                     (
@@ -129,6 +106,7 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 2
                                 AND p.sector_id = s.id
+                                AND p.departamento = "LORETO"
                     ) as DosisDos')
             ->selectRaw('
                     (
@@ -138,39 +116,10 @@ class PacienteController extends Controller
                             ON pc.paciente_id = p.id
                             WHERE pc.dosi_id = 3
                             AND p.sector_id = s.id
+                            AND p.departamento = "LORETO"
                     ) as DosisTres')
-
-            ->selectRaw('
-                    (
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                                INNER JOIN pacients p
-                                ON pc.paciente_id = p.id
-                                WHERE pc.dosi_id = 1 
-                                AND p.sector_id = s.id
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                                INNER JOIN pacients p
-                                ON pc.paciente_id = p.id
-                                WHERE pc.dosi_id = 2 
-                                AND p.sector_id = s.id
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                                INNER JOIN pacients p
-                                ON pc.paciente_id = p.id
-                                WHERE pc.dosi_id = 3 
-                                AND p.sector_id = s.id
-                        )
-                    ) as Total')
-
             ->join('sectors as s','p.sector_id','=','s.id')
+            ->where('p.departamento','=', 'LORETO')
             ->groupBy('s.descripcion','s.id')->get();        
 
     }
@@ -222,8 +171,7 @@ class PacienteController extends Controller
                 ->groupBy('fab')->get();        
     }
 
-    public function getProvinciaDosis(Request $request)
-    {
+    public function getProvinciaDosis(Request $request){
 
         if($request->f_inicio && $request->f_fin) {
 

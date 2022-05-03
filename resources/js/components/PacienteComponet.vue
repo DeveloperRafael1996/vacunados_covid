@@ -29,6 +29,7 @@
                     <table class="table table-bordered table-striped table-sm">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Opciones</th>
                                 <th>Nombre Paciente</th>
                                 <th>Grupo Riesgo</th>

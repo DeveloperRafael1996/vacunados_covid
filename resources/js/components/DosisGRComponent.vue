@@ -26,7 +26,7 @@
                                 <th>1RDA DOSIS</th>
                                 <th>2DA DOSIS</th>
                                 <th>3RA DOSIS</th>
-                                <th>TOTAL</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -34,9 +34,16 @@
                                 <td v-text="item.descripcion"></td>
                                 <td v-text="item.DosisUno"></td>
                                 <td v-text="item.DosisDos"></td>
-                                 <td v-text="item.DosisTres"></td>
-                                <td v-text="item.Total"></td>
-                            </tr>                                
+                                <td v-text="item.DosisTres"></td>
+                            </tr>          
+
+                            <tr >
+                                <td>TOTAL</td>
+                                <td>{{dosis_1}}</td>
+                                <td>{{dosis_2}}</td>
+                                <td>{{dosis_3}}</td>
+                            </tr>    
+
                         </tbody>
                       
                     </table>
@@ -53,7 +60,10 @@
 export default {
     data() {
         return {
-            grupo:[]
+            grupo:[],
+            dosis_1:0,
+            dosis_2:0,
+            dosis_3:0
         }
     },  
     methods:{
@@ -61,6 +71,19 @@ export default {
             axios.get('grupo-riesgo-dosis')
                 .then((response) => {
                      this.grupo = response.data;
+
+                     this.dosis_1 = this.grupo.reduce((acc, r) => {
+                            return acc + parseFloat(r.DosisUno);
+                      }, 0);
+
+                      this.dosis_2 = this.grupo.reduce((acc, r) => {
+                            return acc + parseFloat(r.DosisDos);
+                      }, 0);
+
+                      this.dosis_3 = this.grupo.reduce((acc, r) => {
+                            return acc + parseFloat(r.DosisTres);
+                      }, 0);
+                     
                 });
         }
     },

@@ -30,7 +30,13 @@
                             <tr v-for="(item ,index) in edades" :key="index">
                                 <td v-text="item.descripcion"></td>
                                 <td v-text="item.cantidad"></td>
-                            </tr>                                
+                            </tr>       
+
+                            <tr>
+                                <td>TOTAL</td>
+                                <td>{{total}}</td>
+                            </tr>     
+
                         </tbody>
                       
                     </table>
@@ -47,14 +53,18 @@
 export default {
     data() {
         return {
-            edades:[]
+            edades:[],
+            total:0
         }
     },  
     methods:{
         get_edades(){
             axios.get('edades')
                 .then((response) => {
-                     this.edades = response.data;
+                    this.edades = response.data;
+                    this.total = this.edades.reduce((acc, r) => {
+                            return acc + parseFloat(r.cantidad);
+                     }, 0);
                 });
         }
     },

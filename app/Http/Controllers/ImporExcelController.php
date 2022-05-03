@@ -21,17 +21,12 @@ class ImporExcelController extends Controller
         return view('admin.upload.index');
     }
 
-    public function postImportExcel(Request $request){
-
+    public function postImportExcel(Request $request)
+    {
         $file = $request->file('file');
         $this->excel->import(new PacienteImport, $file);
-        
-        
-        session()->flash('message', 'Importacion de paciente completada');
-        
-        //return redirect()->route('main');
 
+        session()->flash('message', 'Importacion de paciente completada');
         return 'Registro Exitoso...';
-   
     }
 }

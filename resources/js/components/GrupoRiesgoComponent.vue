@@ -29,7 +29,13 @@
                             <tr v-for="(item ,index) in grupoRiesgo" :key="index">
                                 <td v-text="item.descripcion"></td>
                                 <td v-text="item.cantidad"></td>
-                            </tr>                                
+                            </tr>        
+                            
+                            <tr>
+                                <td>TOTAL</td>
+                                <td>{{total}}</td>
+                            </tr>
+
                         </tbody>
                     </table>
                     
@@ -45,7 +51,8 @@
 export default {
     data() {
         return {
-            grupoRiesgo:[]
+            grupoRiesgo:[],
+            total: 0
         }
     },  
     methods:{
@@ -53,14 +60,14 @@ export default {
             axios.get('grupo-riesgo')
                 .then((response) => {
                     this.grupoRiesgo = response.data;
-
-                    //console.log(this.grupoRiesgo);
+                    this.total = this.grupoRiesgo.reduce((acc, r) => {
+                        return acc + parseFloat(r.cantidad);
+                    }, 0);
                 });
         }
     },
     mounted() {
         console.log('Component mounted.');
-        //this.get_pacientes();
     }
 }
 </script>
