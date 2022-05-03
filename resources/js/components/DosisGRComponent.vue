@@ -72,7 +72,7 @@ export default {
                 .then((response) => {
                      this.grupo = response.data;
 
-                     this.dosis_1 = this.grupo.reduce((acc, r) => {
+                      this.dosis_1 = this.grupo.reduce((acc, r) => {
                             return acc + parseFloat(r.DosisUno);
                       }, 0);
 

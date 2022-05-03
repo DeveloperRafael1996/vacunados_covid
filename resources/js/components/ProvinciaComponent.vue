@@ -39,7 +39,7 @@
                                 <th>1RDA DOSIS</th>
                                 <th>2DA DOSIS</th>
                                 <th>3RA DOSIS</th>
-                                <th>TOTAL</th>
+                              
                             </tr>
                         </thead>
                         <tbody>
@@ -48,8 +48,15 @@
                                 <td v-text="item.DosisUno"></td>
                                 <td v-text="item.DosisDos"></td>
                                 <td v-text="item.DosisTres"></td>
-                                <td v-text="item.Total"></td>
-                            </tr>                                
+                            </tr>      
+
+                             <tr>
+                                <td>TOTAL</td>
+                                <td>{{dosis_1}}</td>
+                                <td>{{dosis_2}}</td>
+                                <td>{{dosis_3}}</td>
+                            </tr>
+
                         </tbody>
                       
                     </table>
@@ -68,22 +75,33 @@ export default {
         return {
             provincia:[],
             distrito: [],
+            dosis_1:0,
+            dosis_2:0,
+            dosis_3:0,
             f_inicio: '',
             f_fin: ''
         }
     },  
     methods:{
         get_provincia(){
-
-            //console.log(this.f_inicio)
-            //console.log(this.f_fin)
-
             axios.post('provincia-dosis', {
                 'f_inicio':this.f_inicio,
                 'f_fin':this.f_fin
             })
             .then((response) => {
                 this.provincia = response.data;
+                
+                this.dosis_1 = this.provincia.reduce((acc, r) => {
+                    return acc + parseFloat(r.DosisUno);
+                }, 0);
+
+                this.dosis_2 = this.provincia.reduce((acc, r) => {
+                    return acc + parseFloat(r.DosisDos);
+                }, 0);
+
+                this.dosis_3 = this.provincia.reduce((acc, r) => {
+                    return acc + parseFloat(r.DosisTres);
+                }, 0);
             });
         }, 
         get_distrito(){

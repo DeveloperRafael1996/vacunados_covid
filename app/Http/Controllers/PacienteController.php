@@ -130,45 +130,35 @@ class PacienteController extends Controller
                 ->selectRaw('
                     (
                         SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            INNER JOIN pacients pac
+                            ON pacient_dosic.paciente_id = pac.id
                             WHERE dosi_id = 1 
                             AND  fabricante = fab
+                            AND pac.departamento = "LORETO"
                     ) as DosisUno')
 
                 ->selectRaw('
                     (
                         SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            INNER JOIN pacients pac
+                            ON pacient_dosic.paciente_id = pac.id
                             WHERE dosi_id = 2 
                             AND  fabricante = fab
+                            AND pac.departamento = "LORETO"
                     ) as DosisDos')
                 ->selectRaw('
                     (
                         SELECT COUNT(dosi_id) FROM pacient_dosic 
+                            INNER JOIN pacients pac
+                            ON pacient_dosic.paciente_id = pac.id
                             WHERE dosi_id = 3 
                             AND  fabricante = fab
+                            AND pac.departamento = "LORETO"
                     ) as DosisTres')
-                ->selectRaw('
-                    (
-                        (  
-                            SELECT COUNT(dosi_id) FROM pacient_dosic 
-                                WHERE dosi_id = 1 
-                                AND  fabricante = fab
-                        ) 
-                        +
-                        (
-                            SELECT COUNT(dosi_id) FROM pacient_dosic 
-                                WHERE dosi_id = 2
-                                AND  fabricante = fab
-                        )
-                        +
-                        (
-                            SELECT COUNT(dosi_id) FROM pacient_dosic 
-                                WHERE dosi_id = 3
-                                AND  fabricante = fab
-                        )
-
-                    ) as Total')
-            
-                ->groupBy('fab')->get();        
+                
+                ->join('pacients as p','p.id','=','pacient_dosic.paciente_id')
+                ->where('p.departamento','=',"LORETO")
+                ->groupBy('fab','p.departamento')->get();        
     }
 
     public function getProvinciaDosis(Request $request){
@@ -185,6 +175,7 @@ class PacienteController extends Controller
                             ON pc.paciente_id = p.id
                             WHERE pc.dosi_id = 1 
                             AND p.provincia = pac.provincia
+                            AND p.departamento = "LORETO"
                     ) as DosisUno')
                 ->selectRaw('
                         (
@@ -194,6 +185,7 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 2 
                                 AND p.provincia = pac.provincia
+                                AND p.departamento = "LORETO"
                         ) as DosisDos')
                 ->selectRaw('
                         (
@@ -203,37 +195,8 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 3 
                                 AND p.provincia = pac.provincia
+                                AND p.departamento = "LORETO"
                         ) as DosisTres')
-
-                ->selectRaw('
-                    (
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 1 
-                            AND p.provincia = pac.provincia
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 2 
-                            AND p.provincia = pac.provincia
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 3 
-                            AND p.provincia = pac.provincia
-                        )
-                    ) as Total')
                 ->groupBy('pac.provincia')
                 ->where('pacient_dosic.fecha_vacunacion', '>=', $request->f_inicio)
                 ->where('pacient_dosic.fecha_vacunacion', '<=', $request->f_fin)
@@ -251,6 +214,7 @@ class PacienteController extends Controller
                             ON pc.paciente_id = p.id
                             WHERE pc.dosi_id = 1 
                             AND p.provincia = pac.provincia
+                            AND p.departamento = "LORETO"
                     ) as DosisUno')
                 ->selectRaw('
                         (
@@ -260,6 +224,7 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 2 
                                 AND p.provincia = pac.provincia
+                                AND p.departamento = "LORETO"
                         ) as DosisDos')
                 ->selectRaw('
                         (
@@ -269,37 +234,8 @@ class PacienteController extends Controller
                                 ON pc.paciente_id = p.id
                                 WHERE pc.dosi_id = 3 
                                 AND p.provincia = pac.provincia
+                                AND p.departamento = "LORETO"
                         ) as DosisTres')
-
-                ->selectRaw('
-                    (
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 1 
-                            AND p.provincia = pac.provincia
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 2 
-                            AND p.provincia = pac.provincia
-                        )
-                        +
-                        (
-                            SELECT COUNT(pc.dosi_id)  
-                            FROM pacient_dosic pc
-                            INNER JOIN pacients p
-                            ON pc.paciente_id = p.id
-                            WHERE pc.dosi_id = 3 
-                            AND p.provincia = pac.provincia
-                        )
-                    ) as Total')
                 ->where('pac.departamento','=', 'LORETO')
                 ->groupBy('pac.departamento','pac.provincia')->get();       
     }

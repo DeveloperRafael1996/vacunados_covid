@@ -5706,10 +5706,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      fabricante: []
+      fabricante: [],
+      dosis_1: 0,
+      dosis_2: 0,
+      dosis_3: 0
     };
   },
   methods: {
@@ -5718,6 +5728,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('fabricante-dosis').then(function (response) {
         _this.fabricante = response.data;
+        _this.dosis_1 = _this.fabricante.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisUno);
+        }, 0);
+        _this.dosis_2 = _this.fabricante.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisDos);
+        }, 0);
+        _this.dosis_3 = _this.fabricante.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisTres);
+        }, 0);
       });
     }
   },
@@ -6201,11 +6220,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       provincia: [],
       distrito: [],
+      dosis_1: 0,
+      dosis_2: 0,
+      dosis_3: 0,
       f_inicio: '',
       f_fin: ''
     };
@@ -6214,13 +6243,20 @@ __webpack_require__.r(__webpack_exports__);
     get_provincia: function get_provincia() {
       var _this = this;
 
-      //console.log(this.f_inicio)
-      //console.log(this.f_fin)
       axios.post('provincia-dosis', {
         'f_inicio': this.f_inicio,
         'f_fin': this.f_fin
       }).then(function (response) {
         _this.provincia = response.data;
+        _this.dosis_1 = _this.provincia.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisUno);
+        }, 0);
+        _this.dosis_2 = _this.provincia.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisDos);
+        }, 0);
+        _this.dosis_3 = _this.provincia.reduce(function (acc, r) {
+          return acc + parseFloat(r.DosisTres);
+        }, 0);
       });
     },
     get_distrito: function get_distrito() {
@@ -30688,26 +30724,36 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.fabricante, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", { domProps: { textContent: _vm._s(item.fab) } }),
+                [
+                  _vm._l(_vm.fabricante, function (item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", { domProps: { textContent: _vm._s(item.fab) } }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisUno) },
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisDos) },
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisTres) },
+                      }),
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("TOTAL")]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisUno) },
-                    }),
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_1))]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisDos) },
-                    }),
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_2))]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisTres) },
-                    }),
-                    _vm._v(" "),
-                    _c("td", { domProps: { textContent: _vm._s(item.Total) } }),
-                  ])
-                }),
-                0
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_3))]),
+                  ]),
+                ],
+                2
               ),
             ]
           ),
@@ -30755,8 +30801,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("2DA DOSIS")]),
         _vm._v(" "),
         _c("th", [_vm._v("3RA DOSIS")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("TOTAL")]),
       ]),
     ])
   },
@@ -31525,28 +31569,38 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.provincia, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.provincia) },
-                    }),
+                [
+                  _vm._l(_vm.provincia, function (item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.provincia) },
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisUno) },
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisDos) },
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(item.DosisTres) },
+                      }),
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("TOTAL")]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisUno) },
-                    }),
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_1))]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisDos) },
-                    }),
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_2))]),
                     _vm._v(" "),
-                    _c("td", {
-                      domProps: { textContent: _vm._s(item.DosisTres) },
-                    }),
-                    _vm._v(" "),
-                    _c("td", { domProps: { textContent: _vm._s(item.Total) } }),
-                  ])
-                }),
-                0
+                    _c("td", [_vm._v(_vm._s(_vm.dosis_3))]),
+                  ]),
+                ],
+                2
               ),
             ]
           ),
@@ -31594,8 +31648,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("2DA DOSIS")]),
         _vm._v(" "),
         _c("th", [_vm._v("3RA DOSIS")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("TOTAL")]),
       ]),
     ])
   },
